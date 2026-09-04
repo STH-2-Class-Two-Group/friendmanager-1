@@ -21,4 +21,10 @@ def now_datetime():
     print("오늘날짜는"+now.strftime("%Y-%m-%d") + "입니다.")
     print("현재시간은"+now.strftime("%H:%M:%S") + "입니다.")
 
+def timedelta_day(days):
+    return timedelta(days=days)
+
+
+
 now_datetime()
+
