@@ -66,3 +66,20 @@ diff = target_date - today
 
 print("남은 기간 객체:", diff)
 print("남은 일수:", diff.days)
+
+
+last_day = datetime(2026, 12, 30)
+today = datetime.now()
+
+diffDay = last_day - today
+print("남은 기간 객체:", diffDay)
+
+# last_day = datetime(2016, 12, 8)
+year = input("전역년도를 입력하시오.")
+month = input("전역월을 입력하시오.")
+day = input("전역일을 입력하시오.")
+
+last_day = datetime(int(year), int(month), int(day))
+current_day = datetime.now()
+
+print(current_day - last_day)
