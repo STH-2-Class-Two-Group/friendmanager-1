@@ -1,15 +1,21 @@
 from datetime import datetime, timedelta
 
 now = datetime.now()
-print(now)
+
+day = timedelta(days=365*7)
+
+#! 7년뒤 계산
+sevenyears = now+day
+
+print(sevenyears)
+#! 2033-09-02 14:37:07.394412
 
 
-#! 365일 이라는 것을 표현. 추가된 시간은 0:00:00으로 표기됨
-day = timedelta(days=365)
+#! 1년 50주 30일 전 계산
 
-print(day)
-#! 2주 5일 12시간 10분 5초를 추가
-add = timedelta(weeks = 2, days = 5, hours = 12, minutes = 10, seconds = 5)
+days = timedelta(weeks = 50, days = 365+30 )
 
-print(add)
-#! ->19 days, 12:10:05 표기됨. 2주->14일 + 5일
+onesatimeago = now-days
+print(onesatimeago)
+
+#! 2024-08-20 14:37:52.575804
