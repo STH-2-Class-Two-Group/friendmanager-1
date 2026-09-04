@@ -21,10 +21,19 @@ def now_datetime():
     print("오늘날짜는"+now.strftime("%Y-%m-%d") + "입니다.")
     print("현재시간은"+now.strftime("%H:%M:%S") + "입니다.")
 
-def timedelta_day(days):
-    return timedelta(days=days)
+#todo 입력받은 일수를 timedelta 객체로 반환해주는 함수
+def timedelta_day():
+    what_days = int(input("몇일을 계산할까요?"))
+    return timedelta(days=what_days)
+
+
+#todo timedelta_day()함수에서 반환받은 일수만큼 날짜를 더해주는 함수
+def 일수계산기(days):
+    result = now + days
+    print(str(days.days),"일뒤 날짜는", result.strftime("%Y-%m-%d"), "입니다.")
 
 
 
 now_datetime()
-
+days = timedelta_day()
+일수계산기(days)
