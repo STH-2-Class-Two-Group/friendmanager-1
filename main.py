@@ -2,20 +2,15 @@ from datetime import datetime, timedelta
 
 now = datetime.now()
 
-day = timedelta(days=365*7)
+#! 원하는 데이터만 꺼내오기
 
-#! 7년뒤 계산
-sevenyears = now+day
+print(now.date())
+print(now.time())
+print(now.day)
+print(now.second)
 
-print(sevenyears)
-#! 2033-09-02 14:37:07.394412
+#! 2026-09-04 날짜
+#! 15:07:01.198664 시간
+#! 4 일
+#! 1 초
 
-
-#! 1년 50주 30일 전 계산
-
-days = timedelta(weeks = 50, days = 365+30 )
-
-onesatimeago = now-days
-print(onesatimeago)
-
-#! 2024-08-20 14:37:52.575804
