@@ -19,3 +19,5 @@ onesatimeago = now-days
 print(onesatimeago)
 
 #! 2024-08-20 14:37:52.575804
+
+print(now)
