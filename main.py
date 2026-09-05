@@ -1,85 +1,39 @@
-from datetime import datetime, timedelta
+class Person:
+    def __init__(self, name, mbti, age, addr, hobby, concern, job, travel):
+        self.name = name
+        self.mbti = mbti
+        self.age = age
+        self.addr = addr
+        self.hobby = hobby
+        self.concern = concern
+        self.job = job
+        self.travel = travel
+    # 자기 소개 함수
+    def introduce(self):
+        return f"안녕! 내 소개를 하자면 나는 {self.name}이고, MBTI는 {self.mbti}야. 나이는 {self.age}살이야. 집 주소는 {self.addr}이고 취미는 {self.hobby}야."
+    # 걱정거리 함수
+    def thinkConcern(self):
+        return f"내가 최근에 걱정했던 내용은 {self.concern}야."
+    # 직업 소개 함수
+    def introduceJob(self):
+        return f"나는 {self.job} 직장에서 일을 한 적이 있어."
+    # 여행지 소개 함수
+    def introduceTravel(self):
+        return f"나는 {self.travel} 여행지를 최근 가본 적이 있어."
+# 사용자 입력을 외부에서 받기
+name = input("이름을 말해줘: ")
+mbti = input("MBTI를 말해줘: ")
+age = int(input("나이를 말해줘: "))
+addr = input("집 주소를 말해줘: ")
+hobby = input("취미를 말해줘: ")
+concern = input("최근에 했던 걱정거리를 말해줘: ")
+job = input("직업을 말해줘: ")
+travel = input("여행지를 말해줘: ")
 
-now = datetime.now()
+person1 = Person(name, mbti, age, addr, hobby, concern, job, travel)
 
-day = timedelta(days=365*7)
-
-#! 7년뒤 계산
-sevenyears = now+day
-
-print(sevenyears)
-#! 2033-09-02 14:37:07.394412
-
-
-#! 1년 50주 30일 전 계산
-
-days = timedelta(weeks = 50, days = 365+30 )
-
-onesatimeago = now-days
-print(onesatimeago)
-
-#! 2024-08-20 14:37:52.575804
-
-print(now)
-
-
-
-# datetime.now()는 컴퓨터 현재시각을 초 단위보다 더 정밀하게 가져옴.
-# 시분초 뒤에 .383301 같은 숫자는 마이크로초를 의미.
-# datetime.now() 기본 출력값은 2026-09-04 14:41:53.383301임.
-# datetime은 현재 시각을 표현.
-# .now() 메서드는 코드가 실행될 때 현재 날짜와 시간 정보를 가져옴.
-now = datetime.now()
-
-print("now에 대한 값은 ", now)
-
-# datetime은 특정 날짜도 생성 가능.
-# datetime(2026, 12, 25) 는 2026년 12월 25일 00시 00분 00초를 의미. 
-# datetime(year, month, day, hour, minute, second) 형식이 기본적인 형식이나 최소한 year, month, day만 넣어도 정상적으로 출력됨.
-xmas = datetime(2026, 12, 25)
-print("xmas에 대한 값은 ", xmas)
-
-
-print(f"오늘 날짜는 {now.year}년 {now.month}월 {now.day}일 {now.hour}시 {now.minute}분 {now.second}초 입니다.")
-# strftime() 메서드는 datetime -> 원하는 문자열로 치환
-formatted_str = now.strftime("%Y-%m-%d %H:%M:%S")
-print(formatted_str)
-
-# strptime() 메서드는 문자열 -> datetime 객체
-date_str = "2026-10-01 09:00:00"
-parsed_dt = datetime.strptime(date_str, "%Y-%m-%d %H:%M:%S")
-print("파싱된 datetime:", parsed_dt)
-
-# timedelta 인자로는 days, hours, minutes, seconds, weeks 등 사용.
-after_100_days = now + timedelta(days=100)
-print("100일 후 날짜는 ", after_100_days.strftime("%Y-%m-%d %H:%M:%S"))
-
-before_3_weeks = now - timedelta(weeks=3)
-print("3주 전:", before_3_weeks.strftime("%Y-%m-%d"))
-
-# 두 날짜 간 차이
-# datetime 객체끼리 빼면 timedelta 객체가 반환될 수 있음.
-target_date = datetime(2026, 12, 31)
-today = datetime.now()
-
-diff = target_date - today
-
-print("남은 기간 객체:", diff)
-print("남은 일수:", diff.days)
-
-
-last_day = datetime(2026, 12, 30)
-today = datetime.now()
-
-diffDay = last_day - today
-print("남은 기간 객체:", diffDay)
-
-# last_day = datetime(2016, 12, 8)
-year = input("전역년도를 입력하시오.")
-month = input("전역월을 입력하시오.")
-day = input("전역일을 입력하시오.")
-
-last_day = datetime(int(year), int(month), int(day))
-current_day = datetime.now()
-
-print(current_day - last_day)
+# 결과 출력
+print(person1.introduce())
+print(person1.thinkConcern())
+print(person1.introduceJob())
+print(person1.introduceTravel())
