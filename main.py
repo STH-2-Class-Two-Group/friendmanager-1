@@ -25,3 +25,12 @@ CREATE TABLE IF NOT EXISTS calls (
 
 #todo 지금까지 쓴 내용을 데이터베이스에 최종 저장한다.
 conn.commit()
+
+#todo insert는 데이터를 추가하는 명령어 입니다.
+#todo 테이블에서 데이터를 넣을 열을 지정하고, 그 열에 넣을 값을 values()에 작성한다.
+cursor.execute("""
+insert into calls (name, phone_number, call_date, duration) 
+values('박대성','010-1234-5678','2023-09-02',120)
+""")
+
+conn.commit()
