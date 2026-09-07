@@ -95,5 +95,22 @@ def update_call():
 
     conn.commit()
 
-update_call()
+#todo delete는 데이터를 삭제하는 명령어 입니다.
+#todo WHERE를 사용하여 삭제할 데이터를 지정한다.
+#todo where뒤에 삭제하고 싶은걸 작성한다.
+def delete_call():
+
+    cursor.execute("""
+    DELETE FROM calls
+    WHERE name = ?
+    
+    """,('박대성',))
+
+    #todo 지금까지 쓴 내용을 데이터베이스에 최종 저장한다.
+    conn.commit()
+
+delete_call()
 select_one()
+
+
+
