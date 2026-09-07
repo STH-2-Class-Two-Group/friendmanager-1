@@ -29,3 +29,11 @@ CREATE TABLE IF NOT EXISTS contacts(
     name TEXT NOT NULL,
     phone_number TEXT NOT NULL UNIQUE
     )""")
+
+cursor.execute("""
+CREATE TABLE IF NOT EXISTS call_records(
+    call_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    contacts INTEGER NOT NULL,
+    call_at TEXT NOT NULL ,
+    duration INTEGER NOT NULL
+    )""")
