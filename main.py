@@ -73,3 +73,18 @@ def select_for():
     for rows2 in cursor:
         print(rows2)
 
+def select_many(count):
+
+    cursor.execute("SELECT * FROM calls")
+    # TODO 조회된 결과 중 최대 count개의 행을 가져온다.
+    rows = cursor.fetchmany(count)
+
+    #todo 리스트로 그대로 출력이 된다.
+    print(rows)
+
+    # TODO 가져온 여러 행을 하나씩 출력한다.
+    for row in rows:
+        print(row)
+
+
+select_many(3)
