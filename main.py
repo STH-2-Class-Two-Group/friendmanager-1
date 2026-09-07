@@ -40,7 +40,29 @@ CREATE TABLE IF NOT EXISTS call_records(
 
 #! 내부 목록 수정
 
+#cursor.execute("""
+#ALTER TABLE call_records
+#RENAME COLUMN contacts to contact_id
+#""")
+
+#! 데이터 삽입
+
 cursor.execute("""
-ALTER TABLE call_records
-RENAME COLUMN call_at to called_at
-""")
+INSERT INTO contacts(
+    name,
+    phone_number
+)
+VALUES(?,?)
+""",("홍길동", "01011112222"))
+
+cursor.execute("""
+INSERT INTO call_records(
+    contact_id,
+    called_at,
+    duration
+)
+VALUES(?,?,?)
+""",(1,"2026-09-03 10:30:15", 300))
+
+#! 데이터를 넣을때 반드시 commit을 해야지만 db에 적용이 된다
+conn.commit()
