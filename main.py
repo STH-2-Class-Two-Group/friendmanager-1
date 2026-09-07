@@ -65,4 +65,44 @@ VALUES(?,?,?)
 """,(1,"2026-09-03 10:30:15", 300))
 
 #! 데이터를 넣을때 반드시 commit을 해야지만 db에 적용이 된다
+#! 추가·수정·삭제(INSERT / UPDATE / DELETE)에는 반드시 commit이 필요하다.
 conn.commit()
+
+
+#! 무언가의 아이디어가 떠오를거 같은데에에에에에 일단 보류
+
+data1 = [
+    ("홍길동", "01011112222"),
+    ("남도일", "01022223333"),
+    ("김철수", "01033334444")
+]
+
+data2 = [
+    (data1[0],"2026.07.30 10:30:50", 500)
+    (data1[1],"2026.07.29 10:30:50", 700)
+    (data1[2],"2026.07.28 10:30:50", 300)
+    (data1[0],"2026.07.27 10:30:50", 900)
+]
+
+
+
+cursor.execute("""
+INSERT INTO contacts(
+    name,
+    phone_number
+)
+VALUES(?,?)
+""",data1)
+
+cursor.execute("""
+INSERT INTO call_records(
+    contact_id,
+    called_at,
+    duration
+)
+VALUES(?,?,?)
+""",data2)
+
+conn.commit()
+
+conn.close
