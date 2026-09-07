@@ -1,3 +1,4 @@
+from test import Contact
 
 #todo sqlite3 모듈을 사용하겠다.
 import sqlite3
