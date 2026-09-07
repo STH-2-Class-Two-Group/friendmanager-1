@@ -34,3 +34,13 @@ values('박대성','010-1234-5678','2023-09-02',120)
 """)
 
 conn.commit()
+
+# TODO SELECT조회해라 FROM=위치는 calls에서
+# TODO *는 모든 열을 의미한다.
+cursor.execute("SELECT * FROM calls")
+
+# TODO SELECT로 조회한 결과를 모두 가져온다.
+# TODO fetchall()은 조회된 모든 행(row)을 가져와서 리스트 형태로 반환한다.
+rows = cursor.fetchall()
+
+print(rows)
