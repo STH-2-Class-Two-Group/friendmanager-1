@@ -109,8 +109,12 @@ def delete_call():
     #todo 지금까지 쓴 내용을 데이터베이스에 최종 저장한다.
     conn.commit()
 
-delete_call()
-select_one()
+ #todo rollback()은 지금까지 쓴 내용을 취소한다. 되돌린다.
+ #! rollback()은 commit()을 호출했을땐 사용이 불가능하다.
+def rollback_call():
+
+    conn.rollback()
+
 
 
 
