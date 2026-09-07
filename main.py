@@ -33,6 +33,11 @@ insert into calls (name, phone_number, call_date, duration)
 values('박대성','010-1234-5678','2023-09-02',120)
 """)
 
+cursor.execute("""
+insert into calls (name, phone_number, call_date, duration)
+values('장승운','010-4231-4232','2025-10-23',600)
+""")
+
 conn.commit()
 
 # TODO SELECT조회해라 FROM=위치는 calls에서
