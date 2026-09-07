@@ -49,3 +49,7 @@ cursor.execute("SELECT * FROM calls")
 rows = cursor.fetchall()
 
 print(rows)
+
+#todo for in 반복문을 사용하여 rows에 있는 리스트를 하나씩 출력한다
+for rows2 in rows:
+    print(rows2)
