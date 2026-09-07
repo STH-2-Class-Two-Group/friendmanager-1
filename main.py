@@ -37,3 +37,10 @@ CREATE TABLE IF NOT EXISTS call_records(
     call_at TEXT NOT NULL ,
     duration INTEGER NOT NULL
     )""")
+
+#! 내부 목록 수정
+
+cursor.execute("""
+ALTER TABLE call_records
+RENAME COLUMN call_at to called_at
+""")
