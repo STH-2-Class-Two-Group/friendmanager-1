@@ -5,7 +5,7 @@ import sqlite3
 # todo SQlite 데이터베이스 ("call.db")에연결하라
 # todo 파일이 없더라도 call.db 파일이 생성이 됩니다.
 # todo conn은 connetion(연결) 객체를 의미합니다. 
-conn = sqlite3.connect("call2.db")
+conn = sqlite3.connect("call.db")
 
 # todo cursor 객체를 생성해라
 # todo cursor는 SQL문 명령어를 실행하기위함이다.
@@ -86,4 +86,14 @@ def select_many(count):
     for row in rows:
         print(row)
 
+def update_call():
+    cursor.execute("""
+    UPDATE calls
+    SET duration = 300
+    WHERE id = 1
+    """)
 
+    conn.commit()
+
+update_call()
+select_one()
