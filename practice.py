@@ -54,6 +54,11 @@ class Contact:
         # SELECT 쿼리 실행 결과로 찾아낸 모든 행을 반복문으로 돌려서 한 줄씩 조회.
         for i in rows:
             print(i)
+
+        '''
+        fetchone() : 조회 결과 중 1개의 행만 가져옴.
+        fetchmany(size) : 지정한 갯수(size)만큼 행 가져옴.
+        '''
     
 
     # 연락처 이름을 변경하는 메서드.
