@@ -61,13 +61,19 @@ class Contact:
 
         return self.frequency
 
-class sqlite넣기(Contact()):
-    def __init__(self): 
-        self.data ={"이름:", self.name,
-                    "연락처": self.call_number,
-                    "1년간 통화 횟수": self.count_calls()
-                    "1년간 총 통화시간": self.total_time, 
-                    "연락 빈도": self.frequency} 
+class sqlite넣기(Contact):
+    def __init__(self,name,call_number): 
+        super().__init__(self,name,call_number)  
+
+    def data_add(self):
+        self.data = {
+            "name": self.name,
+            "call_number": self.call_number,
+            "count_calls": self.count_calls(),
+            "total_time": self.total_time,
+            "frequency": self.frequency
+        }
+
     def sqlite_table_생성(self): 
         self.cursor.execute("""
             create table if not exists call_data( 
@@ -83,27 +89,36 @@ class sqlite넣기(Contact()):
         conn.commit()
     def sqlite_입력(self):
         self.cursor.execute(""" 
-            insert into call_data 
+            insert into call_data (
             name, 
             call_number, 
             count_calls,
             total_time, 
-            frequency) 
-            values(self.data ={
-                                "이름":?,
-                                "연락처":?,
-                                "1년간 통화 횟수":?,
-                                "1년간 총 통화시간":?,
-                                "연락 빈도":?} """, 
-            self.data)
+            frequency )
+            values( :"name",
+                    :"call_number, 
+                    :"count_calls",
+                    :"total_time", 
+                    :"frequency")  
+
+            on conflict(name, call_number)
+
+            do update set
+            count_calls = excluded.count_calls,
+            total_time = excluded.total_time, 
+            frequency = excluded.frequency
+
+        """,self.data)
         conn.commit()
-    def sqlite_업데이트(self):
+        conn.close()
+
+#todo ui와 연동
+    def sqlite_삭제(self, 사용자Y_N):
         self.cursor.execute(""" 
-            update call_data
-            set count_calls=?
-                total_time=? 
-                frequency=?
-            where managementnumber = ?
-            """, self.data)
+            delete from call_data
+            if f{사용자Y_N}
+            """)
         conn.commit()
+
+
         conn.close()
