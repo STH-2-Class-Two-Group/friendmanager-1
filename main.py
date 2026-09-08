@@ -1,13 +1,9 @@
-from datetime import datetime, timedelta
-
+from datetime import timedelta
 import sqlite3
-conn = sqlite3.connect("friend_manager.db")
-cursor = conn.cursor()
 
-
-#todo 관리 정보 연락처 추가
 
 class Contact:
+
     def __init__(self, name, call_number):
         self.name = name
         self.call_number = call_number
@@ -32,8 +28,10 @@ class Contact:
         remaining_calls = []
 
         for call in self.calls:
+
             if call["called_at"] >= one_year_ago:
                 remaining_calls.append(call)
+
             else:
                 self.total_time -= call["duration"]
 
@@ -45,6 +43,7 @@ class Contact:
 
     # 연락 빈도 분류
     def classify_frequency(self):
+
         call_count = self.count_calls()
 
         if call_count < 30:
@@ -61,49 +60,90 @@ class Contact:
 
         return self.frequency
 
-class sqlite넣기(Contact()):
-    def __init__(self): 
-        self.data ={"이름:", self.name,
-                    "연락처": self.call_number,
-                    "1년간 통화 횟수": self.count_calls()
-                    "1년간 총 통화시간": self.total_time, 
-                    "연락 빈도": self.frequency} 
-    def sqlite_table_생성(self): 
+
+class SQLite넣기(Contact):
+
+    def __init__(self, name, call_number):
+
+        # Contact의 __init__ 실행
+        super().__init__(name, call_number)
+
+        # SQLite 연결
+        self.conn = sqlite3.connect("friend_manager.db")
+        self.cursor = self.conn.cursor()
+
+    # SQLite에 넣을 데이터 한 덩어리 생성
+    def make_data(self):
+
+        self.classify_frequency()
+
+        self.data = {
+            "name": self.name,
+            "call_number": self.call_number,
+            "count_calls": self.count_calls(),
+            "total_time": self.total_time,
+            "frequency": self.frequency
+        }
+
+        return self.data
+
+    # 테이블 생성
+    def sqlite_table_생성(self):
+
         self.cursor.execute("""
-            create table if not exists call_data( 
-                managementnumber integer primary key autoincrement, 
-                name text not null,
-                call_number integer not null, 
-                count_calls integer not null,
-                total_time integer not null, 
-                frequency text not null
-                unique(name, call_number)
+            CREATE TABLE IF NOT EXISTS call_data (
+
+                managementnumber INTEGER PRIMARY KEY AUTOINCREMENT,
+
+                name TEXT NOT NULL,
+
+                call_number TEXT NOT NULL,
+
+                count_calls INTEGER NOT NULL,
+
+                total_time INTEGER NOT NULL,
+
+                frequency TEXT NOT NULL,
+
+                UNIQUE(name, call_number)
             )
-        """) 
-        conn.commit()
+        """)
+
+        self.conn.commit()
+
+    # 데이터 입력 / 기존 데이터 업데이트
     def sqlite_입력(self):
-        self.cursor.execute(""" 
-            insert into call_data 
-            name, 
-            call_number, 
-            count_calls,
-            total_time, 
-            frequency) 
-            values(self.data ={
-                                "이름":?,
-                                "연락처":?,
-                                "1년간 통화 횟수":?,
-                                "1년간 총 통화시간":?,
-                                "연락 빈도":?} """, 
-            self.data)
-        conn.commit()
-    def sqlite_업데이트(self):
-        self.cursor.execute(""" 
-            update call_data
-            set count_calls=?
-                total_time=? 
-                frequency=?
-            where managementnumber = ?
-            """, self.data)
-        conn.commit()
-        conn.close()
+
+        self.make_data()
+
+        self.cursor.execute("""
+            INSERT INTO call_data (
+                name,
+                call_number,
+                count_calls,
+                total_time,
+                frequency
+            )
+
+            VALUES (
+                :name,
+                :call_number,
+                :count_calls,
+                :total_time,
+                :frequency
+            )
+
+            ON CONFLICT(name, call_number)
+
+            DO UPDATE SET
+
+                count_calls = excluded.count_calls,
+                total_time = excluded.total_time,
+                frequency = excluded.frequency
+
+        """, self.data)
+
+        self.conn.commit()
+
+    def close(self):
+        self.conn.close()
