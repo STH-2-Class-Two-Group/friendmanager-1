@@ -2,8 +2,9 @@ from datetime import timedelta
 
 
 class Contact:
-    def __init__(self, name):
+    def __init__(self, name, phone_number):
         self.name = name
+        self.phone_number = phone_number
         self.calls = []
         self.total_time = 0
         self.frequency = None
@@ -57,6 +58,7 @@ class Contact:
     # 현재 정보 출력
     def show_info(self):
         print("이름:", self.name)
+        print("전화번호:", self.phone_number)
         print("1년간 통화 횟수:", self.count_calls())
         print("1년간 총 통화시간:", self.total_time, "초")
         print("연락 빈도:", self.frequency)
