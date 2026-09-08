@@ -1,9 +1,16 @@
 from datetime import datetime, timedelta
 
+import sqlite3
+conn = sqlite3.connect("friend_manager.db")
+cursor = conn.cursor()
+
+
+#todo 관리 정보 연락처 추가
 
 class Contact:
-    def __init__(self, name):
+    def __init__(self, name, call_number):
         self.name = name
+        self.call_number = call_number
         self.calls = []
         self.total_time = 0
         self.frequency = None
@@ -54,9 +61,49 @@ class Contact:
 
         return self.frequency
 
-    # 현재 정보 출력
-    def show_info(self):
-        print("이름:", self.name)
-        print("1년간 통화 횟수:", self.count_calls())
-        print("1년간 총 통화시간:", self.total_time, "초")
-        print("연락 빈도:", self.frequency)
+class sqlite넣기(Contact()):
+    def __init__(self): 
+        self.data ={"이름:", self.name,
+                    "연락처": self.call_number,
+                    "1년간 통화 횟수": self.count_calls()
+                    "1년간 총 통화시간": self.total_time, 
+                    "연락 빈도": self.frequency} 
+    def sqlite_table_생성(self): 
+        self.cursor.execute("""
+            create table if not exists call_data( 
+                managementnumber integer primary key autoincrement, 
+                name text not null,
+                call_number integer not null, 
+                count_calls integer not null,
+                total_time integer not null, 
+                frequency text not null
+                unique(name, call_number)
+            )
+        """) 
+        conn.commit()
+    def sqlite_입력(self):
+        self.cursor.execute(""" 
+            insert into call_data 
+            name, 
+            call_number, 
+            count_calls,
+            total_time, 
+            frequency) 
+            values(self.data ={
+                                "이름":?,
+                                "연락처":?,
+                                "1년간 통화 횟수":?,
+                                "1년간 총 통화시간":?,
+                                "연락 빈도":?} """, 
+            self.data)
+        conn.commit()
+    def sqlite_업데이트(self):
+        self.cursor.execute(""" 
+            update call_data
+            set count_calls=?
+                total_time=? 
+                frequency=?
+            where managementnumber = ?
+            """, self.data)
+        conn.commit()
+        conn.close()
