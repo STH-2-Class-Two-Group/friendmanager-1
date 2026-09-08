@@ -33,3 +33,23 @@ def call_duration():
     seconds = call_sum % 60
     print(f"{Name}님과 {hours}시간 {minutes}분 {seconds}초 동안 통화했고 {call_count}회 만큼 통화했습니다")
 
+    return Name,call_count
+
+def classify_frequency(name,call_count):
+        
+        if call_count < 30:
+            frequency = "적은 빈도"
+
+        elif call_count <= 70:
+            frequency = "애매한 빈도"
+
+        elif call_count <= 100:
+            frequency = "많은 빈도"
+
+        else:
+            frequency = "그 이상"
+
+        print(f"{name}님과의 통화 빈도는 {frequency} 입니다.")
+
+name,call_count = call_duration()
+classify_frequency(name,call_count)
