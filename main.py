@@ -10,13 +10,14 @@ class Contact:
         '''
         2026.09.03 main_jangsg
         사용자 기준 분류 작업용 저장 공간 추가
-        '''
+        
         self.categories = {
             '가족': [],
             '친구': [],
             '지인': [],
             '비즈니스': []
         }
+        '''
 
     # 통화 기록 추가
     '''
@@ -84,10 +85,11 @@ class Contact:
     사용자 분류 작업 함수 생성.
     4가지 분류(가족, 친구, 지인, 비즈니스) 중 하나를 선택하면
     선택한 분류항목에 이름을 추가하도록 구현.
-    '''
+    
     def user_category(self, category_name, name):
         if category_name in self.categories:
             self.categories[category_name].append(name)
+    '''
         
 
 
