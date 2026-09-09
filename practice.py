@@ -7,8 +7,10 @@ class Contact:
     def __init__(self, db_name = "call_manager.db"):
         # 파일 형태 데이터베이스에 연결.
         self.conn = sqlite3.connect(db_name)
-        # SQL 쿼리문 수행할 cursor 객체 생성
+        # SQL 쿼리문 수행할 cursor 객체 생성.
         self.cursor = self.conn.cursor()
+        # Contact 클래스 객체 생성되는 시점에 1년 전 시간을 one_year_ago 변수에 할당.
+        self.one_year_ago = datetime.now() - timedelta(days=365)
         # call_logs테이블 없으면 새로 만드는 SQL문 실행.
         self.cursor.execute("""
             CREATE TABLE IF NOT EXISTS call_logs (
@@ -42,13 +44,11 @@ class Contact:
     기존 구현했던 remove_old_calls(1년 경과한 기록 삭제) 함수 부분을 db에 delete하는 로직으로 대체.
     '''
     def delete_calls(self):
-        # 현재 시간 - 1년전 날짜
-        one_year_ago = datetime.now() - timedelta(days=365)
         # call_logs 테이블에 통화 날짜가 365일 전 날짜보다 작으면 삭제.
-        self.cursor.execute("DELETE FROM call_logs WHERE call_date < ?", (one_year_ago, ))
+        self.cursor.execute("DELETE FROM call_logs WHERE call_date < ?", (self.one_year_ago, ))
         # 테이블 삭제 변경사항을 DB에 최종 반영.
         self.conn.commit()
-        # 삭제 처리한 리스트 건 수 삭제 완료했다고 출력.
+        # 삭제 처리한 리스트 건 수 삭제 완료했다고 출력. rowcount는 cursor 객체의 기본 속성.
         print(f"{self.cursor.rowcount}건 삭제 완료!!")
 
     '''
@@ -56,9 +56,8 @@ class Contact:
     기존 구현했던 count_calls(1년간 통화 횟수 계산) 함수 부분을 db에 select count하는 로직으로 대체.
     '''
     def show_calls_cnt(self):
-        one_year_ago = datetime.now() - timedelta(days=365)
         sql = "SELECT COUNT(*) FROM call_logs WHERE call_date > ?"
-        self.cursor.execute(sql, (one_year_ago,))
+        self.cursor.execute(sql, (self.one_year_ago,))
         result = self.cursor.fetchone()
         print(f"총 {result[0]}건 조회됩니다.")
 
@@ -66,9 +65,8 @@ class Contact:
     # 새로 구현한 함수 부분~!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     # 통화 기록 목록 조회하는 메서드.
     def show_all(self):
-        one_year_ago = datetime.now() - timedelta(days=365)
         # call_logs 테이블에 name, phone, duration, call_date 컬럼 조회.
-        self.cursor.execute("SELECT name, phone, duration, call_date FROM call_logs WHERE call_date > ?", (one_year_ago, ))
+        self.cursor.execute("SELECT name, phone, duration, call_date FROM call_logs WHERE call_date > ?", (self.one_year_ago, ))
         # SELECT 쿼리의 실행 결과로 찾아낸 모든 행을 파이썬의 리스트 형태로 전부 가져옴.
         rows = self.cursor.fetchall()
         # SELECT 쿼리 실행 결과로 찾아낸 모든 행을 반복문으로 돌려서 한 줄씩 조회.
@@ -87,7 +85,7 @@ class Contact:
         self.cursor.execute("UPDATE call_logs SET name = 'TEST1' WHERE name = ? AND phone = ?", (name, phone))
         # 테이블 변경사항을 DB에 최종 반영.
         self.conn.commit()
-        # 변경 처리한 리스트 건 수 변경 완료했다고 출력.
+        # 변경 처리한 리스트 건 수 변경 완료했다고 출력. rowcount는 cursor 객체의 기본 속성.
         print(f"{self.cursor.rowcount}건 변경 완료")
                             
     
