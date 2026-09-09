@@ -78,7 +78,7 @@ class Contact:
         fetchmany(size) : 지정한 갯수(size)만큼 행 가져옴.
         '''
     
-
+    '''
     # 연락처 이름을 변경하는 메서드.
     def update_calls_name(self, name, phone):
         # call_logs 테이블에 name, phone 조건에 따라서 name 컬럼에 'TEST1'으로 변경.
@@ -87,6 +87,7 @@ class Contact:
         self.conn.commit()
         # 변경 처리한 리스트 건 수 변경 완료했다고 출력. rowcount는 cursor 객체의 기본 속성.
         print(f"{self.cursor.rowcount}건 변경 완료")
+    '''
                             
     
 
@@ -103,7 +104,9 @@ manager.save_calls(calls_list)
 
 manager.delete_calls()
 
+'''
 manager.update_calls_name("TEST", "010-2222-2345")
+'''
 
 manager.show_all()
 
