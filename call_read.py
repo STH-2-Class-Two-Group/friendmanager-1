@@ -38,6 +38,25 @@ class CallRead:
 
         return Name,call_count
 
+    # todo 기존 call_duration() 함수에서 파이썬 내장함수인 divmod()를 이용해서 작성
+    # todo divmod(a, b) : a를 b로 나눈 몫과 나머지를 같이 돌려주는 파이썬 내장함수
+    # todo 예: divmod(1635, 60) → (27, 15)  27분 15초 
+    def call_duration2(self):
+        Name = input("조회할 이름을 입력하세요")
+        call_sum = 0
+        call_count = 0
+        for name, phone_number, duration, call_date in self.rows:
+            if name == Name:
+                call_sum += duration   
+                call_count += 1        
+
+        total_minutes, seconds = divmod(call_sum, 60)
+
+        hours, minutes = divmod(total_minutes, 60)
+
+        print(f"{Name}님과 {hours}시간 {minutes}분 {seconds}초 동안 통화했고 {call_count}회 만큼 통화했습니다")
+        return Name,call_count
+
     def classify_frequency(self,name,call_count):
         
             if call_count < 30:
