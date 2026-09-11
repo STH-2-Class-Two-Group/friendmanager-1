@@ -52,53 +52,53 @@ class Contact:
         call_count = self.count_calls(callcount)
 
         if call_count < 30:
-            self.frequency = "Adagio_"
+            self.frequency = "Adagio_아주_느리게"
 
         elif call_count <= 70:
-            self.frequency = "Andante"
+            self.frequency = "Andante_느리게"
 
         elif call_count <= 100:
             self.frequency = "Allegro_빠르게"
 
         else:
-            self.frequency = "Presto"
+            self.frequency = "Presto_아주_빠르게"
 
         return self.frequency
 
 
 class SQLite넣기(Contact):
 
-    def __init__(self, name, call_number):
+    def __init__(self, name, call_number, DBname):
 
         # Contact의 __init__ 실행
         super().__init__(name, call_number)
 
         # SQLite 연결
-        self.conn = sqlite3.connect("friend_manager.db")
+        self.conn = sqlite3.connect(f"{DBname}")
         self.cursor = self.conn.cursor()
 
     # SQLite에 넣을 데이터 한 덩어리 생성
-    def make_data(self):
+    def make_data(self, callcount, calltime):
 
         self.classify_frequency()
 
         self.data = {
             "name": self.name,
             "call_number": self.call_number,
-            "count_calls": self.count_calls(),
-            "total_time": self.total_time,
+            "count_calls": callcount,
+            "total_time": calltime,
             "frequency": self.frequency
         }
 
         return self.data
 
     # 테이블 생성
-    def sqlite_table_생성(self):
+    def sqlite_table_생성(self, DBname):
 
-        self.cursor.execute("""
-            CREATE TABLE IF NOT EXISTS call_data (
+        self.cursor.execute(f"""
+            CREATE TABLE IF NOT EXISTS {DBname} (
 
-                managementnumber INTEGER PRIMARY KEY AUTOINCREMENT,
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
 
                 name TEXT NOT NULL,
 
@@ -121,7 +121,7 @@ class SQLite넣기(Contact):
 
         self.make_data()
 
-        self.cursor.execute("""
+        self.cursor.executemany("""
             INSERT INTO call_data (
                 name,
                 call_number,
@@ -152,3 +152,4 @@ class SQLite넣기(Contact):
 
     def close(self):
         self.conn.close()
+
