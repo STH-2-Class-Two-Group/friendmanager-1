@@ -8,7 +8,9 @@ class Contact:
         self.name = name
         self.call_number = call_number
         self.calls = []
+        self.oldcalls = []
         self.total_time = 0
+        self.one_time = 0
         self.frequency = None
 
     # 통화 기록 추가
@@ -19,7 +21,9 @@ class Contact:
         }
 
         self.calls.append(call)
+        self.oldcalls.append(call)
         self.total_time += duration
+        self.one_time += duration
 
     # 1년이 지난 통화 기록 삭제
     def remove_old_calls(self, reference_time):
@@ -33,30 +37,31 @@ class Contact:
                 remaining_calls.append(call)
 
             else:
-                self.total_time -= call["duration"]
+                self.one_time -= call["duration"]
+
 
         self.calls = remaining_calls
 
     # 1년간 통화 횟수 계산
-    def count_calls(self):
-        return len(self.calls)
+    def count_calls(self, callcount):
+        return len(callcount)
 
     # 연락 빈도 분류
-    def classify_frequency(self):
+    def classify_frequency(self,callcount):
 
-        call_count = self.count_calls()
+        call_count = self.count_calls(callcount)
 
         if call_count < 30:
-            self.frequency = "적은 빈도"
+            self.frequency = "Adagio_"
 
         elif call_count <= 70:
-            self.frequency = "애매한 빈도"
+            self.frequency = "Andante"
 
         elif call_count <= 100:
-            self.frequency = "많은 빈도"
+            self.frequency = "Allegro_빠르게"
 
         else:
-            self.frequency = "그 이상"
+            self.frequency = "Presto"
 
         return self.frequency
 
