@@ -1,5 +1,20 @@
 from datetime import timedelta
 
+from read import crudTest
+from call_list import dummy_call_logs
+
+test = crudTest()
+
+test.createTable()
+
+'''
+test.insertData()
+'''
+
+'''
+test.selectTable()
+'''
+
 
 class Contact:
     def __init__(self, name, phone_number):
@@ -18,6 +33,8 @@ class Contact:
 
         self.calls.append(call)
         self.total_time += duration
+
+        # test.insertData()
 
     # 1년이 지난 통화 기록 삭제
     def remove_old_calls(self, reference_time):
@@ -62,3 +79,9 @@ class Contact:
         print("1년간 통화 횟수:", self.count_calls())
         print("1년간 총 통화시간:", self.total_time, "초")
         print("연락 빈도:", self.frequency)
+        # test.selectTable()
+con = Contact()
+
+con.add_call()
+
+con.show_info()
