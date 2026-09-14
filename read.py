@@ -38,13 +38,15 @@ class crudTest:
         print(f"{cursor.rowcount}건이 정상 등록되었습니다.")
 
 
-    def selectTable(self):
+    def selectTable(self, name):
         conn = sqlite3.connect(self.dbname)
         cursor = conn.cursor()
 
         cursor.execute("""
-        SELECT * FROM master_call
-        """)
+            SELECT name, phone, duration, call_date, call_type 
+            FROM master_call 
+            WHERE name = ?
+        """, (name,))
 
         rows = cursor.fetchall()
 
