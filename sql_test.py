@@ -21,7 +21,8 @@ def create_table():
         name TEXT NOT NULL,
         phone_number TEXT NOT NULL,
         call_date TEXT NOT NULL,
-        duration INTEGER NOT NULL
+        duration INTEGER NOT NULL,
+        call_type INTEGER NOT NULL
     )
     """)
 
