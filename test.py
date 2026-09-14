@@ -80,8 +80,6 @@ class Contact:
         print("1년간 총 통화시간:", self.total_time, "초")
         print("연락 빈도:", self.frequency)
         # test.selectTable()
-con = Contact()
-
-con.add_call()
-
-con.show_info()
+        
+target_name = "김철수"
+test.selectTable(target_name)
