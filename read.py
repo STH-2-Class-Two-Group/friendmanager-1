@@ -2,7 +2,7 @@ import sqlite3
 from datetime import datetime,timedelta
 
 # 데이터베이스 연결
-conn = sqlite3.connect("call.db")
+conn = sqlite3.connect("call3.db")
 cursor = conn.cursor()
 
 
@@ -35,7 +35,6 @@ def select_person(name):
     print(f"{name}님과의 통화기록 ")
     for row in rows:
         print(row)
-    return name
 
 
 #todo  3. 특정 사람의 통화 횟수 조회
@@ -93,7 +92,7 @@ def DESC_calls(name):
     rows = cursor.fetchall()
 
     for row in rows:
-        print(row)
+        print(row) 
 
 #todo 6.오래된 기록 조회(하나만)
 #todo 이부분으로 이사람이랑 얼마나 통화했는지 마지막 통화가 몇일이 지났어요, 이사람이랑 연락한지 3년이 되었어요 가능할거같음
