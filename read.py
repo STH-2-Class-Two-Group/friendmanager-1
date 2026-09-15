@@ -1,3 +1,7 @@
+'''
+read.py
+SQLite DB 테이블 생성, CRUD 구현 담당.
+'''
 import sqlite3
 from call_list import dummy_call_logs 
 
@@ -24,6 +28,8 @@ class crudTest:
         conn.commit()
         print(f"성공적으로 테이블이 만들어졌습니다.")
 
+        conn.close()
+
     def insertData(self):
         conn = sqlite3.connect(self.dbname)
         cursor = conn.cursor()
@@ -36,6 +42,8 @@ class crudTest:
         conn.commit()
 
         print(f"{cursor.rowcount}건이 정상 등록되었습니다.")
+
+        conn.close()
 
 
     def selectTable(self, name):
@@ -50,8 +58,13 @@ class crudTest:
 
         rows = cursor.fetchall()
 
+        conn.close()
+
         for row in rows:
             print(row)
+        # 함수 호출 시 쿼리만 실행되고 구해온 데이터는 가져올 수 없어서 함수나 객체에서 가져오기 위함임.
+        return row
+    
 
 
 '''
