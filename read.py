@@ -4,6 +4,7 @@ SQLite DB 테이블 생성, CRUD 구현 담당.
 '''
 import sqlite3
 from call_list import dummy_call_logs 
+from datetime import datetime, timedelta
 
 class crudTest:
 
@@ -42,6 +43,22 @@ class crudTest:
         conn.commit()
 
         print(f"{cursor.rowcount}건이 정상 등록되었습니다.")
+
+        conn.close()
+
+    def deleteData(self):
+        conn = sqlite3.connect(self.dbname)
+        cursor = conn.cursor()
+
+        one_year_ago = datetime.now() - timedelta(days=365)
+
+        cursor.execute("""
+            DELETE FROM master_call WHERE call_date < ?
+        """, one_year_ago)
+
+        conn.commit()
+
+        print(f"{cursor.rowcount}건이 정상 삭제되었습니다.")
 
         conn.close()
 
