@@ -79,5 +79,6 @@ if __name__ == "__main__":
     test = crudTest()
     test.createTable()
     test.insertData()
+    test.deleteData()
     test.selectTable("김철수")
     print("테스트용")
