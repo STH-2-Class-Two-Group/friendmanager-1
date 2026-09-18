@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <title>통화 기록 관리 System</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-top: 15px;
+        }
+
+        th,
+        td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+
+<body>
+    <h2>📞 통화 기록 목록</h2>
+
+    <!-- 검색 폼 -->
+    <form action="/search" method="get">
+        <input type="text" name="name" placeholder="이름 검색" value="{{ search_name if search_name else '' }}">
+        <button type="submit">검색</button>
+        <a href="/"><button type="button">전체보기</button></a>
+    </form>
+
+    <!-- 통화 기록 테이블 -->
+    <table>
+        <thead>
+            <tr>
+                <th>이름</th>
+                <th>전화번호</th>
+                <th>통화시간(초)</th>
+                <th>통화일시</th>
+                <th>통화타입</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for log in logs %}
+            <tr>
+                <td>{{ log.name }}</td>
+                <td>{{ log.phone }}</td>
+                <td>{{ log.duration }}초</td>
+                <td>{{ log.call_date }}</td>
+                <td>{{ '수신' if log.call_type == '1' else '발신' }}</td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="5">조회된 통화 기록이 없습니다.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+
+</html>
